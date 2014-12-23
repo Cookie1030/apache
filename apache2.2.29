@@ -1,0 +1,42 @@
+yum install -y wget
+
+PREFIX_DIR=/srv
+HTTPD_DIR=$HTTPD_DIR/httpd-2.2.27
+
+yum -y install pcre-devel openssl-devel
+
+cd /usr/local/src/
+
+wget http://ftp.cuhk.edu.hk/pub/packages/apache.org/httpd/httpd-2.2.27.tar.gz
+
+tar zxf httpd-2.2.27.tar.gz
+cd httpd-2.2.27
+
+./configure --prefix=/srv/httpd-2.2.27 \
+--with-mpm=event \
+--enable-mods-static="so dir mime rewrite deflate expires vhost_alias include ssl status" \
+--disable-authn_file \
+--disable-authn_default \
+--disable-authz_groupfile \
+--disable-authz_user \
+--disable-authz_default \
+--disable-auth_basic \
+--disable-version \
+--disable-env \
+--disable-autoindex \
+--disable-asis \
+--disable-cgid \
+--disable-cgi \
+--disable-negotiation \
+--disable-actions \
+--disable-userdir \
+--disable-version \
+--enable-so \
+--enable-deflate \
+--enable-expires \
+--enable-headers \
+--enable-ssl \
+--enable-rewrite \
+--enable-include \
+--enable-remoteip \
+--enable-ratelimit
