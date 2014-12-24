@@ -7,13 +7,30 @@ yum -y install pcre-devel openssl-devel
 
 cd /usr/local/src/
 
+
+wget http://apache.01link.hk/apr/apr-0.9.20.tar.gz
+wget http://apache.01link.hk/apr/apr-util-0.9.19.tar.gz
 wget http://ftp.cuhk.edu.hk/pub/packages/apache.org/httpd/httpd-2.2.27.tar.gz
+
+tar zxf apr-0.9.20.tar.gz
+cd apr-0.9.20
+./configure --prefix=/srv/apr-0.9.20 && make && make install
+
+cd ..
+
+tar zxf apr-util-0.9.19.tar.gz
+cd apr-util-0.9.19
+./configure --prefix=/srv/apr-util-0.9.19 --with-apr=/srv/apr-0.9.20 && make && make install
+
+cd ..
 
 tar zxf httpd-2.2.27.tar.gz
 cd httpd-2.2.27
 
 ./configure --prefix=/srv/httpd-2.2.27 \
 --with-mpm=event \
+--with-apr=/srv/apr-0.9.20 \
+--with-apr-util=/srv/apr-util-0.9.19 \
 --enable-mods-static="so dir mime rewrite deflate expires vhost_alias include ssl status" \
 --disable-authn_file \
 --disable-authn_default \
